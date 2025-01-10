@@ -37,12 +37,12 @@ interface IFetchOptions {
 	dest: string;
 }
 
-function getElectronVersion(): Record<string, string> {
+/*function getElectronVersion(): Record<string, string> {
 	const npmrc = fs.readFileSync(path.join(REPO_ROOT, '.npmrc'), 'utf8');
 	const electronVersion = /^target="(.*)"$/m.exec(npmrc)![1];
 	const msBuildId = /^ms_build_id="(.*)"$/m.exec(npmrc)![1];
 	return { electronVersion, msBuildId };
-}
+}*/
 
 function getSha(filename: fs.PathLike): string {
 	const hash = createHash('sha256');
@@ -175,7 +175,7 @@ export async function getVSCodeSysroot(arch: DebianArchString): Promise<string> 
 }
 
 export async function getChromiumSysroot(arch: DebianArchString): Promise<string> {
-	const sysrootJSONUrl = `https://raw.githubusercontent.com/electron/electron/v${getElectronVersion().electronVersion}/script/sysroots.json`;
+	const sysrootJSONUrl = `https://raw.githubusercontent.com/electron/electron/v32.2.7/script/sysroots.json`;
 	const sysrootDictLocation = `${tmpdir()}/sysroots.json`;
 	const result = spawnSync('curl', [sysrootJSONUrl, '-o', sysrootDictLocation]);
 	if (result.status !== 0) {
