@@ -28,12 +28,12 @@ const ghDownloadHeaders = {
     ...ghApiHeaders,
     Accept: 'application/octet-stream',
 };
-/*function getElectronVersion(): Record<string, string> {
+function getElectronVersion() {
     const npmrc = fs.readFileSync(path.join(REPO_ROOT, '.npmrc'), 'utf8');
-    const electronVersion = /^target="(.*)"$/m.exec(npmrc)![1];
-    const msBuildId = /^ms_build_id="(.*)"$/m.exec(npmrc)![1];
+    const electronVersion = /^target="(.*)"$/m.exec(npmrc)[1];
+    const msBuildId = /^ms_build_id="(.*)"$/m.exec(npmrc)[1];
     return { electronVersion, msBuildId };
-}*/
+}
 function getSha(filename) {
     const hash = (0, crypto_1.createHash)('sha256');
     // Read file 1 MB at a time
@@ -157,7 +157,7 @@ async function getVSCodeSysroot(arch) {
     return result;
 }
 async function getChromiumSysroot(arch) {
-    const sysrootJSONUrl = `https://raw.githubusercontent.com/electron/electron/v32.2.7/script/sysroots.json`;
+    const sysrootJSONUrl = `https://raw.githubusercontent.com/electron/electron/v${getElectronVersion().electronVersion}/script/sysroots.json`;
     const sysrootDictLocation = `${(0, os_1.tmpdir)()}/sysroots.json`;
     const result = (0, child_process_1.spawnSync)('curl', [sysrootJSONUrl, '-o', sysrootDictLocation]);
     if (result.status !== 0) {
